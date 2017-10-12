@@ -47,5 +47,7 @@ export default {
 }
 </script>
 <style>
-
+    .md-table .md-table-cell{
+        font-size: 22px;
+    }
 </style>

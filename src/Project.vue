@@ -183,11 +183,9 @@ export default {
 .label.green{
     background-color:#0ec40e;
 }
-
 .label.blue{
     background-color:#2196f3;
 }
-
 .label.white{
     background-color:white;
     color:#2196f3;
@@ -199,7 +197,6 @@ export default {
     width:100%;
     margin:7px 0;
 }
-
 .md-card-content{
     pointer-events: none;
 }
