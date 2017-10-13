@@ -101,13 +101,16 @@ export default {
     },
 
     methods: {
+
+
         getStories: function() {
-            var options = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            function getCookie(name) {
+              var value = "; " + document.cookie;
+              var parts = value.split("; " + name + "=");
+              if (parts.length == 2) return parts.pop().split(";").shift();
             }
-            this.$http.get(this.getProjectEndPoint + this.id , options).then(function(response) {
+
+            this.$http.get(this.getProjectEndPoint + this.id + "/?access_token=" + getCookie("access_token")).then(function(response) {
                 response.data.forEach((item) => {
                     if(item.status==1) this.storiesIB.push(item);
                     else if(item.status==2) this.storiesEM.push(item);
@@ -134,10 +137,25 @@ export default {
             else if (targetArea.classList.contains('tt')) targetStatus = 4;
             else if (targetArea.classList.contains('cp')) targetStatus = 5;
 
-            this.$http.post(this.changeStatusEndPoint, {id:id,status:targetStatus}).then(function(response) {
+            function getCookie(name) {
+              var value = "; " + document.cookie;
+              var parts = value.split("; " + name + "=");
+              if (parts.length == 2) return parts.pop().split(";").shift();
+            }
+
+            var options = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            this.$http.post(this.changeStatusEndPoint + "?access_token=" + getCookie("access_token"), {id:id,status:targetStatus}, options).then(function(response) {
                 console.log('sc')
             }, function(error) {
-                console.log(error.bodyText);
+                if(getCookie('access_token') && error.status == 401){
+                    document.location= "/";
+                    document.cookie= "access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+                }
             })
         }
     },

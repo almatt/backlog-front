@@ -47,7 +47,7 @@ export default {
                 data:params
             }).then(function(response){
                 document.cookie = "access_token =" + response.data.access_token + ";path=/";
-                console.log(getCookie('access_token'));
+                document.location = '/';
             });
         }
     }
