@@ -101,8 +101,6 @@ export default {
     },
 
     methods: {
-
-
         getStories: function() {
             function getCookie(name) {
               var value = "; " + document.cookie;

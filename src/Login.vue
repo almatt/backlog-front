@@ -1,7 +1,7 @@
 <template>
 <div>
     <div id="login">
-        <form novalidate @submit.stop.prevent="login">
+        <form @submit.stop.prevent="login">
             <md-input-container>
                 <label>Login</label>
                 <md-input required placeholder="Login" v-model="username"></md-input>
