@@ -26,7 +26,7 @@
     <md-dialog md-open-from="#create" md-close-to="#create" ref="dialog">
         <md-dialog-title>Create</md-dialog-title>
         <md-dialog-content>
-            <form>
+            <form @submit.stop.prevent="submitCreateProject">
                 <md-input-container>
                     <label>Project name</label>
                     <md-input required placeholder="Name" v-model="name"></md-input>
@@ -77,6 +77,7 @@ export default {
                 this.$http.post(this.createProjectEndPoint + "?access_token=" + getCookie("access_token"), {name: this.name}).then(function(response) {
                     this.dialog('dialog', 'close');
                     this.getAllProjects();
+                    this.name='';
                 }, function(error) {
                     if (getCookie('access_token') && error.status == 401) {
                         document.location = "/";
@@ -92,8 +93,13 @@ export default {
                 var parts = value.split("; " + name + "=");
                 if (parts.length == 2) return parts.pop().split(";").shift();
             }
+            var options = {
+                body:{
+                    id:id
+                }
+            }
 
-            this.$http.delete(this.deleteProjectEndPoint + "?access_token=" + getCookie("access_token"),{id:id}).then(function(response) {
+            this.$http.delete(this.deleteProjectEndPoint + "?access_token=" + getCookie("access_token"),options).then(function(response) {
                 this.getAllProjects();
             }, function(error) {
                 if (getCookie('access_token') && error.status == 401) {
